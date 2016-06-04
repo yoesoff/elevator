@@ -85,6 +85,7 @@ Elevator.prototype.commit_decision = function(floor) {
 };
 
 Elevator.prototype.decide = function() {
+    console.info("decide");
     var simulator = Simulator.get_instance();
     var building = simulator.get_building();
     console_log('elevator id#' + this.id + ' deciding ' + this.destination_floor);

@@ -53,6 +53,23 @@ Elevator.prototype.decide = function() {
     var people = this.get_people();
     var person = people.length > 0 ? people[0] : undefined;
     
+    var priority = new Array;
+    people.forEach( function(person, index) {
+        if (typeof priority[ person.get_destination_floor() ] == 'undefined') {
+            priority[ person.get_destination_floor() ] = 1 ;
+        } else {
+            priority[ person.get_destination_floor() ]++;
+        }
+    });
+
+    //find biggest
+    var biggest=0;
+    priority.forEach(function(floor, index){
+        if (biggest==0) {
+            biggest = index;
+        }
+    });
+
     if(elevator) {
         elevator.at_floor();
         elevator.get_destination_floor();
@@ -61,7 +78,7 @@ Elevator.prototype.decide = function() {
     
     if(person) {
         person.get_floor();
-        return this.commit_decision(person.get_destination_floor());
+        return this.commit_decision(biggest);
     }
     
     for(var i = 0;i < requests.length;i++) {
